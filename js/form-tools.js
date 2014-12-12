@@ -5,8 +5,16 @@
 $(window).on('ajaxInvalidField', function(event, fieldElement, fieldName, errorMsg, isFirst) {
     event.preventDefault()
 
-    var $field = fieldElement.closest('.field'),
+    var $field = fieldElement.closest('.grouped.fields'),
         $label = $('<div />').addClass('ui red pointing above ui label')
+
+    if (!$field.length) {
+        $field = fieldElement.closest('.field')
+    }
+
+    if (!$field.length) {
+        return
+    }
 
     if (errorMsg)
         $label.text(errorMsg.join(', '))
@@ -46,7 +54,7 @@ $(document).on('ajaxPromise', '[data-request]', function() {
         return
 
     $label.remove()
-    $('.field.error', $form).removeClass('error')
+    $('.field.error, .grouped.fields.error', $form).removeClass('error')
 })
 
 /*
