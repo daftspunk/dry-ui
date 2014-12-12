@@ -1,0 +1,34 @@
+// Make link color
+// ----------------------------------
+
+.a-color(@color) {
+    color: @color;
+
+    &:hover, &:focus, &.active {
+        color: mix(@color, black, 80%);
+    }
+}
+
+.a-color(@color; @color-active) {
+    color: @color;
+
+    &:hover, &:focus, &.active {
+        color: @color-active;
+    }
+}
+
+
+// Make btn background
+// ----------------------------------
+
+.btn-background(@color) {
+    background-color: @color;
+
+    &:hover, &:focus {
+        background-color: mix(@color, white, 80%);
+    }
+
+    &:active, &.active {
+        background-color: mix(@color, black, 85%);
+    }
+}

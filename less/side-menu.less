@@ -1,0 +1,76 @@
+
+//
+// Side menu
+// @todo Incomplete implementation
+//
+
+.side-menu {
+    z-index: 2000;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-transform-origin: 0 10%;
+    -moz-transform-origin: 0 10%;
+    -ms-transform-origin: 0 10%;
+    transform-origin: 0 10%;
+    -webkit-transform: perspective(1000px) scale(1.3) rotateY(-80deg);
+    -moz-transform: perspective(1000px) scale(1.3) rotateY(-80deg);
+    -ms-transform: perspective(1000px) scale(1.3) rotateY(-80deg);
+    transform: perspective(1000px) scale(1.3) rotateY(-80deg);
+
+    &.in {
+        -webkit-transition: all .3s 0 ease-out;
+        -moz-transition: all .3s 0 ease-out;
+        -o-transition: all .3s 0 ease-out;
+        -ms-transition: all .3s 0 ease-out;
+        transition: all .3s 0 ease-out;
+        -moz-transition-duration: .3s;
+        -moz-transition-property: all;
+        -moz-transition-delay: 0;
+        -webkit-transform: perspective(1000px) scale(1) rotateY(0deg) translate3d(-260px, 0, 0);
+        -moz-transform: perspective(1000px) scale(1) rotateY(0deg) translate3d(-260px, 0, 0);
+        -ms-transform: perspective(1000px) scale(1) rotateY(0deg) translate3d(-260px, 0, 0);
+        transform: perspective(1000px) scale(1) rotateY(0deg) translate3d(-260px, 0, 0);
+    }
+}
+
+.side-menu-overlay {
+    top: 0;
+    left: 0;
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: -1;
+    opacity: 0;
+    -webkit-transition: all .4s 0 cubic-bezier(.25, .25, .75, .75);
+    -moz-transition: all .4s 0 cubic-bezier(.25, .25, .75, .75);
+    -o-transition: all .4s 0 cubic-bezier(.25, .25, .75, .75);
+    -ms-transition: all .4s 0 cubic-bezier(.25, .25, .75, .75);
+    transition: all .4s 0 cubic-bezier(.25, .25, .75, .75);
+    -moz-transition-duration: .4s;
+    -moz-transition-property: all;
+    -moz-transition-delay: 0;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    &.on {
+        z-index: 1000;
+        opacity: .4;
+    }
+}

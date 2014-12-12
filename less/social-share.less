@@ -1,0 +1,68 @@
+// Social sharing widget
+// ----------------------------------
+
+div[data-control="socialshare"] {
+
+    height: 20px;
+
+    .platform {
+        height:20px;
+        float:left;
+        display:inline;
+        margin-right:13px;
+
+        &.active {
+            margin-right:0;
+
+            &.facebook {
+                width: 48px;
+
+                img {
+                    margin-right: 20px;
+                }
+
+                &.active {
+                    width: 85px;
+                }
+            }
+
+            &.twitter {
+                width: 55px;
+
+                img {
+                    margin-right: 20px;
+                }
+
+                &.active {
+                    width: 85px;
+                }
+            }
+
+            &.google {
+                width: 32px;
+
+                img {
+                    margin-right: 20px;
+                }
+
+                &.active {
+                    width: 68px;
+                }
+            }
+
+            &.pinterest {
+                width: 40px;
+
+                img {
+                    margin-right: 20px;
+                }
+
+                &.active {
+                    width: 55px;
+                }
+            }
+
+            &.facebook-homepage { margin-right:10px; }
+        }
+    }
+}

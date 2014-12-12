@@ -1,0 +1,41 @@
+
+@balloon-control-default-text-color:         #ffffff;
+@balloon-control-default-bg-color:           #bcc3c7;
+@balloon-control-hover-bg-color:             #0181b9;
+@balloon-control-active-bg-color:            #da5700;
+
+div[data-control="balloonSelector"] {
+    ul {
+        padding: 0;
+        margin-bottom: 0;
+
+        li {
+            list-style: none;
+            display: inline-block;
+            padding: 6px 7px 5px;
+            margin-right: 5px;
+            text-transform: uppercase;
+            background: @balloon-control-default-bg-color;
+            color: @balloon-control-default-text-color;
+            font-size: 10px;
+            line-height: 100%;
+            border-radius: @border-radius-base;
+            .transition(all 0.1s ease);
+
+            &.active {
+                background: @balloon-control-active-bg-color !important;
+            }
+        }
+    }
+
+    &.control-disabled {
+        .opacity(0.5);
+    }
+
+    &:not(.control-disabled) ul {
+        li:hover {
+            background: @balloon-control-hover-bg-color;
+            cursor: pointer;
+        }
+    }
+}
