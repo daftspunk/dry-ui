@@ -1,0 +1,38 @@
+// Minimal Textarea
+// ----------------------------------
+
+div[data-control="minimalTextarea"] {
+
+    &.is-minimal {
+        textarea {
+            height: 5em !important;
+            max-height: none !important;
+            min-height: inherit !important;
+        }
+
+        .hide-minimal {
+            display: none;
+        }
+    }
+
+}
+
+div[data-control="minimalContent"] {
+    max-height: 10em;
+    position: relative;
+    overflow: hidden;
+
+    .read-more {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        padding: 5em 0 .1em;
+    }
+
+    &.is-minimal .read-more {
+        background-image: linear-gradient(to bottom, transparent, white);
+    }
+}
