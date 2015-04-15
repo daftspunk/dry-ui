@@ -47,9 +47,8 @@
             return
 
         this.$modal = $('<div />').addClass('ui modal')
-        this.$loader = this.getLoaderSegment()
+        this.$loader = $('<div />').addClass('ui loader')
 
-        this.$modal.append(this.$loader)
         this.$modal.modal({
             onHidden: function() {
                 self.destroy()
@@ -60,7 +59,8 @@
             self.$modal.modal('hide')
         })
 
-        this.$modal.modal('show')
+        this.$modal.modal('show dimmer')
+        this.$modal.before(this.$loader)
 
         var updateObj = {}
         updateObj[this.options.updatePartial] = this.$modal
@@ -70,20 +70,21 @@
          */
         if (this.options.handler) {
 
-            $.request(this.options.handler, {
+            this.$el.request(this.options.handler, {
                 data: this.options.extraData,
                 update: updateObj,
                 success: function(data, textStatus, jqXHR) {
                     this.success(data, textStatus, jqXHR).done(function(){
                         $(window).trigger('ajaxUpdateComplete', [this, data, textStatus, jqXHR])
+                        self.$modal.modal('show')
                         setTimeout(function() {
-                            self.$modal.modal('refresh')
+                            self.$loader.remove()
                         }, 250)
                     })
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     this.error(jqXHR, textStatus, errorThrown).done(function(){
-                        alert(jqXHR.responseText.length ? jqXHR.responseText : jqXHR.statusText)
+                        // alert(jqXHR.responseText.length ? jqXHR.responseText : jqXHR.statusText)
                         self.destroy()
                     })
                 }
@@ -93,18 +94,10 @@
     }
 
     Modal.prototype.destroy = function() {
+        this.$modal.modal('hide')
         this.$modal.remove()
+        this.$loader.remove()
         this.$el.data('oc.ajaxModal', null)
-    }
-
-    Modal.prototype.getLoaderSegment = function() {
-        return $('<div />')
-            .addClass('ui padded segment')
-            .html('                            \
-              <p></p>                          \
-              <div class="ui active dimmer">   \
-                <div class="ui loader"></div>  \
-              </div>')
     }
 
     // AJAX MODAL PLUGIN DEFINITION

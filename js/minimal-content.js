@@ -98,7 +98,7 @@
             maxHeight: 'none'
         })
         .animate({
-            height: this.totalHeight
+            height: this.totalHeight - this.buttonsHeight
         })
 
         this.$el.removeClass('is-minimal')

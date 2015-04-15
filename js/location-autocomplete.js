@@ -9,6 +9,8 @@
  * - data-input-state="#locationState" - input to populate with state
  * - data-input-country="#locationCountry" - input to populate with country
  * - data-input-country-long="#locationCountry" - input to populate with country (long name)
+ * - data-input-latitude="#locationLatitude" - input to populate with latitude
+ * - data-input-longitude="#locationLongitude" - input to populate with longitude
  *
  * JavaScript API:
  * $('input#addressAutocomplete').locationAutocomplete({ inputCountry: '#locationCountry' })
@@ -18,22 +20,22 @@
  *
  * Example markup:
  *
- *    <input
- *        type="text"
- *        class="form-control"
- *        data-control="locationAutocomplete"
- *        data-input-street="#inputStreet"
- *        data-input-city="#locationCity"
- *        data-input-state="#locationState"
- *        data-input-zip="#locationZip"
- *        data-input-country="#locationCountry"
- *        />
- *
- *    <input type="text" name="street" value="" id="inputStreet" />
- *    <input type="text" name="city" value="" id="locationCity" />
- *    <input type="text" name="state" value="" id="locationState" />
- *    <input type="text" name="zip" value="" id="locationZip" />
- *    <input type="text" name="country" value="" id="locationCountry" />
+    <input
+        type="text"
+        class="form-control"
+        data-control="locationAutocomplete"
+        data-input-street="#inputStreet"
+        data-input-city="#locationCity"
+        data-input-state="#locationState"
+        data-input-zip="#locationZip"
+        data-input-country="#locationCountry"
+        />
+
+    <input type="text" name="street" value="" id="inputStreet" />
+    <input type="text" name="city" value="" id="locationCity" />
+    <input type="text" name="state" value="" id="locationState" />
+    <input type="text" name="zip" value="" id="locationZip" />
+    <input type="text" name="country" value="" id="locationCountry" />
  * 
  */
 
@@ -147,6 +149,8 @@
 
             $targetEl.val(extractionFunction(standard, google, 'long_name'))
         })
+
+        this.$el.trigger('changedLocation')
     }
 
     /*
@@ -197,7 +201,7 @@
             if (typeof option == 'string') result = data[option].apply(data, args)
             if (typeof result != 'undefined') return false
         })
-        
+
         return result ? result : this
     }
 
