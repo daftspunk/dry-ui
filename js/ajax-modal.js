@@ -85,6 +85,7 @@
                 error: function(jqXHR, textStatus, errorThrown) {
                     this.error(jqXHR, textStatus, errorThrown).done(function(){
                         // alert(jqXHR.responseText.length ? jqXHR.responseText : jqXHR.statusText)
+                        this.$modal.modal('hide dimmer')
                         self.destroy()
                     })
                 }
@@ -134,5 +135,20 @@
 
         return false
     });
+
+    /*
+     * Automatically close modals when a form reaches success
+     * Example:
+     *
+     *   <form data-request="onSomething" data-modal-hide-success>
+     *       If this form uses this handler (onSomething)
+     *       successfully, the modal will hide
+     *   </form>
+     */
+    $(document)
+        .on('ajaxDone', '[data-modal-hide-success]', function(event, context) {
+            if ($(this).data('request') != context.handler) return
+            $(this).closest('.modal').modal('hide')
+        })
 
 }(window.jQuery);
