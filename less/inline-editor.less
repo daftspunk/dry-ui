@@ -1,0 +1,23 @@
+div[data-control="inline-editor"] {
+    .edit.content {
+        display: none;
+    }
+
+    &.edit-mode {
+        .edit.content {
+            display: block;
+        }
+
+        .view.content {
+            display: none;
+        }
+    }
+
+    .pointing.label[inline-edit] > i {
+        margin: 0;
+    }
+
+    i.icon[inline-save] {
+        cursor: pointer !important;
+    }
+}

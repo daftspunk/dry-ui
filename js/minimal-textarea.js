@@ -2,14 +2,14 @@
  * MinimalTextarea plugin
  * 
  * Data attributes:
- * - data-control="minimalTextarea" - enables the plugin on an element
+ * - data-control="minimal-textarea" - enables the plugin on an element
  * - data-option="value" - an option with a value
  *
  * JavaScript API:
  * $('a#someElement').minimalTextarea({ option: 'value' })
  *
  * Example:
- *   <div class="is-minimal disabled" data-control="minimalTextarea">
+ *   <div class="is-minimal disabled" data-control="minimal-textarea">
  *       <textarea name="content" placeholder="Click here"></textarea>
  *       <div class="hide-minimal">
  *           <button type="submit">
@@ -66,9 +66,9 @@
         var args = Array.prototype.slice.call(arguments, 1), result
         this.each(function () {
             var $this   = $(this)
-            var data    = $this.data('oc.minimalTextarea')
+            var data    = $this.data('ui.minimal-textarea')
             var options = $.extend({}, MinimalTextarea.DEFAULTS, $this.data(), typeof option == 'object' && option)
-            if (!data) $this.data('oc.minimalTextarea', (data = new MinimalTextarea(this, options)))
+            if (!data) $this.data('ui.minimal-textarea', (data = new MinimalTextarea(this, options)))
             if (typeof option == 'string') result = data[option].apply(data, args)
             if (typeof result != 'undefined') return false
         })
@@ -90,7 +90,7 @@
     // ===============
 
     $(document).on('render', function(){
-        $('div[data-control=minimalTextarea]').minimalTextarea()
+        $('div[data-control="minimal-textarea"]').minimalTextarea()
     })
 
 }(window.jQuery);

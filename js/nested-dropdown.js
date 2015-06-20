@@ -4,7 +4,7 @@
  * Displays a set of tree data using multiple drop downs.
  *
  * Data attributes:
- * - data-control="nestedDropdown" - enables the plugin on an element
+ * - data-control="nested-dropdown" - enables the plugin on an element
  *
  * JavaScript API:
  * $('#someElement').nestedDropdown()
@@ -37,7 +37,7 @@ var dataSet = [{
 *
 
 <div
-    data-control="nestedDropdown"
+    data-control="nested-dropdown"
     data-selected-value="7"
     data-empty-placeholder="-- Pick something --">
     <ul>
@@ -219,9 +219,9 @@ var dataSet = [{
         var args = Array.prototype.slice.call(arguments, 1), result
         this.each(function () {
             var $this   = $(this)
-            var data    = $this.data('nestedDropdown')
+            var data    = $this.data('ui.nested-dropdown')
             var options = $.extend({}, NestedDropdown.DEFAULTS, $this.data(), typeof option == 'object' && option)
-            if (!data) $this.data('nestedDropdown', (data = new NestedDropdown(this, options)))
+            if (!data) $this.data('ui.nested-dropdown', (data = new NestedDropdown(this, options)))
             if (typeof option == 'string') result = data[option].apply(data, args)
             if (typeof result != 'undefined') return false
         })
@@ -243,7 +243,7 @@ var dataSet = [{
     // ===============
 
     $(document).render(function() {
-        $('[data-control="nestedDropdown"]').nestedDropdown()
+        $('[data-control="nested-dropdown"]').nestedDropdown()
     })
 
 }(window.jQuery);

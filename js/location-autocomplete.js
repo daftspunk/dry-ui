@@ -2,7 +2,7 @@
  * Location Autocomplete plugin
  * 
  * Data attributes:
- * - data-control="locationAutocomplete" - enables the plugin on an element
+ * - data-control="location-autocomplete" - enables the plugin on an element
  * - data-input-street="#locationStreet" - input to populate with street
  * - data-input-city="#locationCity" - input to populate with city
  * - data-input-zip="#locationZip" - input to populate with zip
@@ -23,7 +23,7 @@
     <input
         type="text"
         class="form-control"
-        data-control="locationAutocomplete"
+        data-control="location-autocomplete"
         data-input-street="#inputStreet"
         data-input-city="#locationCity"
         data-input-state="#locationState"
@@ -195,9 +195,9 @@
         var args = Array.prototype.slice.call(arguments, 1), result
         this.each(function () {
             var $this   = $(this)
-            var data    = $this.data('locationAutocomplete')
+            var data    = $this.data('ui.location-autocomplete')
             var options = $.extend({}, LocationAutocomplete.DEFAULTS, $this.data(), typeof option == 'object' && option)
-            if (!data) $this.data('locationAutocomplete', (data = new LocationAutocomplete(this, options)))
+            if (!data) $this.data('ui.location-autocomplete', (data = new LocationAutocomplete(this, options)))
             if (typeof option == 'string') result = data[option].apply(data, args)
             if (typeof result != 'undefined') return false
         })
@@ -219,7 +219,7 @@
     // ===============
 
     $(document).render(function() {
-        $('[data-control="locationAutocomplete"]').locationAutocomplete()
+        $('[data-control="location-autocomplete"]').locationAutocomplete()
     })
 
 }(window.jQuery, google.maps);

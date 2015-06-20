@@ -38,10 +38,10 @@
     $.fn.balloonSelector = function (option) {
         return this.each(function () {
             var $this = $(this)
-            var data  = $this.data('oc.balloon-selector')
+            var data  = $this.data('ui.balloon-selector')
             var options = $.extend({}, BalloonSelector.DEFAULTS, $this.data(), typeof option == 'object' && option)
 
-            if (!data) $this.data('oc.balloon-selector', (data = new BalloonSelector(this, options)))
+            if (!data) $this.data('ui.balloon-selector', (data = new BalloonSelector(this, options)))
         })
       }
 
@@ -59,7 +59,7 @@
     // ===================================
 
     $(document).on('render', function(){
-        $('div[data-control=balloonSelector]').balloonSelector()
+        $('div[data-control="balloon-selector"]').balloonSelector()
     })
 
 }(window.jQuery);

@@ -2,13 +2,13 @@
  * SocialShare plugin
  * 
  * Data attributes:
- * - data-control="socialshare" - enables the plugin on an element
+ * - data-control="social-share" - enables the plugin on an element
  * - data-option="value" - an option with a value
  *
  * JavaScript API:
  * $('a#someElement').socialShare({ option: 'value' })
  *
- * Dependences: 
+ * Dependences:
  * - Some other plugin (filename.js)
  */
 
@@ -16,7 +16,7 @@
  Usage:
 
     <div
-        data-control="socialshare"
+        data-control="social-share"
         data-title="{{ title }}"
         data-description="{{ description }}"
         data-url="{{ url }}"
@@ -158,9 +158,9 @@
         var args = Array.prototype.slice.call(arguments, 1), result
         this.each(function () {
             var $this   = $(this)
-            var data    = $this.data('oc.socialshare')
+            var data    = $this.data('ui.social-share')
             var options = $.extend({}, SocialShare.DEFAULTS, $this.data(), typeof option == 'object' && option)
-            if (!data) $this.data('oc.socialshare', (data = new SocialShare(this, options)))
+            if (!data) $this.data('ui.social-share', (data = new SocialShare(this, options)))
             if (typeof option == 'string') result = data[option].apply(data, args)
             if (typeof result != 'undefined') return false
         })
@@ -181,7 +181,7 @@
     // SOCIAL SHARE DATA-API
     // ===============
 
-    $(document).on('mouseenter.oc.socialshare', '[data-control="socialshare"]', function() {
+    $(document).on('mouseenter.ui.social-share', '[data-control="social-share"]', function() {
         $(this).socialShare()
     });
 

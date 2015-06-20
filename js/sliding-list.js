@@ -4,7 +4,7 @@
  * Displays a sliding list of data.
  *
  * Data attributes:
- * - data-control="slidingList" - enables the plugin on an element
+ * - data-control="sliding-list" - enables the plugin on an element
  *
  * JavaScript API:
  * $('#someElement').slidingList()
@@ -40,7 +40,7 @@ var dataSet = [{
 <div
     class="sliding-list"
     id="slidingList"
-    data-control="slidingList"
+    data-control="sliding-list"
     data-breadcrumb="#breadcrumb">
     <ul>
         <li data-back-node>
@@ -249,9 +249,9 @@ var dataSet = [{
         var args = Array.prototype.slice.call(arguments, 1), result
         this.each(function () {
             var $this   = $(this)
-            var data    = $this.data('slidingList')
+            var data    = $this.data('ui.sliding-list')
             var options = $.extend({}, SlidingList.DEFAULTS, $this.data(), typeof option == 'object' && option)
-            if (!data) $this.data('slidingList', (data = new SlidingList(this, options)))
+            if (!data) $this.data('ui.sliding-list', (data = new SlidingList(this, options)))
             if (typeof option == 'string') result = data[option].apply(data, args)
             if (typeof result != 'undefined') return false
         })
@@ -273,7 +273,7 @@ var dataSet = [{
     // ===============
 
     $(document).render(function() {
-        $('[data-control="slidingList"]').slidingList()
+        $('[data-control="sliding-list"]').slidingList()
     })
 
 }(window.jQuery);

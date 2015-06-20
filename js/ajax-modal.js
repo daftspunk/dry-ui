@@ -5,7 +5,7 @@
  * - content: content HTML string or callback
  * 
  * Data attributes:
- * - data-control="ajaxModal" - enables the ajax modal plugin
+ * - data-control="ajax-modal" - enables the ajax modal plugin
  * - data-handler="widget:pluginName" - October ajax request name
  * - data-update-partial="some partial" - Partial to popuplate the modal
  * - data-request-data="file_id: 1" - October ajax request data
@@ -34,7 +34,9 @@
     Modal.DEFAULTS = {
         handler: null,
         updatePartial: null,
-        extraData: {}
+        extraData: {},
+        modalId: null,
+        modalClass: null
     }
 
     Modal.prototype.init = function(){
@@ -49,7 +51,17 @@
         this.$modal = $('<div />').addClass('ui modal')
         this.$loader = $('<div />').addClass('ui loader')
 
+        if (this.options.modalId)
+            this.$modal.attr('id', this.options.modalId)
+
+        if (this.options.modalClass)
+            this.$modal.addClass(this.options.modalClass)
+
         this.$modal.modal({
+            closable: false,
+            selector: {
+                close: '.close'
+            },
             onHidden: function() {
                 self.destroy()
             }
@@ -98,7 +110,7 @@
         this.$modal.modal('hide')
         this.$modal.remove()
         this.$loader.remove()
-        this.$el.data('oc.ajaxModal', null)
+        this.$el.data('ui.ajax-modal', null)
     }
 
     // AJAX MODAL PLUGIN DEFINITION
@@ -110,9 +122,9 @@
         var args = Array.prototype.slice.call(arguments, 1)
         return this.each(function () {
             var $this   = $(this)
-            var data    = $this.data('oc.ajaxModal')
+            var data    = $this.data('ui.ajax-modal')
             var options = $.extend({}, Modal.DEFAULTS, $this.data(), typeof option == 'object' && option)
-            if (!data) $this.data('oc.ajaxModal', (data = new Modal(this, options)))
+            if (!data) $this.data('ui.ajax-modal', (data = new Modal(this, options)))
             else if (typeof option == 'string') data[option].apply(data, args)
         })
     }
@@ -130,7 +142,7 @@
     // AJAX MODAL DATA-API
     // ===============
 
-    $(document).on('click.oc.ajaxModal', '[data-control="ajaxModal"]', function() {
+    $(document).on('click.ui.ajax-modal', '[data-control="ajax-modal"]', function() {
         $(this).ajaxModal()
 
         return false

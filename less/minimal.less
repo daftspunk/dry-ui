@@ -1,11 +1,11 @@
 // Minimal Textarea
 // ----------------------------------
 
-div[data-control="minimalTextarea"] {
+div[data-control="minimal-textarea"] {
 
     &.is-minimal {
         textarea {
-            height: 5em !important;
+            height: 5rem !important;
             max-height: none !important;
             min-height: inherit !important;
         }
@@ -17,8 +17,8 @@ div[data-control="minimalTextarea"] {
 
 }
 
-div[data-control="minimalContent"] {
-    max-height: 10em;
+div[data-control="minimal-content"] {
+    max-height: 10rem;
     position: relative;
     overflow: hidden;
 
@@ -29,10 +29,39 @@ div[data-control="minimalContent"] {
         width: 100%;
         text-align: center;
         margin: 0;
-        padding: 5em 0 .1em;
+        padding: 1rem 0 .15rem;
+        z-index: 2;
+        display: none;
     }
 
-    &.is-minimal .read-more {
-        background-image: linear-gradient(to bottom, transparent, white);
+    &:after {
+        content: "";
+        opacity: 0;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 55px;
+        border-bottom: 20px solid #fff;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAjCAYAAABcmsDOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADNJREFUeNpi/P//PwsDGmCBYgxBNmyCrESrZKdMkIMGgpwjQ5AWQUdhbFKYlohLtAABBgDMgwSG4toHZQAAAABJRU5ErkJggg==');
+        background-repeat: repeat-x;
+        background-position: bottom center;
+        .transition(opacity 0.5s);
     }
+
+    &.minimal-gray:after {
+        border-bottom: 20px solid #f0f0f0;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAjCAMAAABrRDD8AAAAXVBMVEXw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PAAAACB4EGfAAAAH3RSTlP51RAG8ezm38nBubGon5aNhHtyaWBXTkY+Ni4nIBkAkiZC8QAAAElJREFUCNdNxLUNxEAAAMF9MDOz+y/TWukCTzDc4qfwV+FLnOIQu9jEKhYxi0mMYhC96EQrGlGLSpSiELnIRCo+CiciFpH4i5cHnpkJNDn3PgcAAAAASUVORK5CYII=');
+    }
+
+    &.minimal-loaded {
+        .read-more {
+            display: block;
+        }
+
+        &.is-minimal:after {
+            opacity: .8;
+        }
+    }
+
 }

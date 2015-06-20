@@ -2,14 +2,14 @@
  * MinimalContent plugin
  * 
  * Data attributes:
- * - data-control="minimalContent" - enables the plugin on an element
+ * - data-control="minimal-content" - enables the plugin on an element
  * - data-option="value" - an option with a value
  *
  * JavaScript API:
  * $('a#someElement').minimalContent({ option: 'value' })
  *
  * Example:
- *   <div class="is-minimal" data-control="minimalContent">
+ *   <div class="is-minimal" data-control="minimal-content">
  *       <p>Some really long content</p>
  *       <div class="read-more">
  *           <a href="javascript:;" class="ui small button">Read more</a>
@@ -46,15 +46,18 @@
         this.isMinimal = this.$el.hasClass('is-minimal')
         this.minimalHeight = this.$el.height()
         this.maxHeight = parseInt(this.$el.css('max-height'))
-        this.buttonsHeight = this.$buttons.height()
+        this.buttonsHeight = this.$buttons.outerHeight()
 
         /*
          * Not required
          */
         if (this.minimalHeight < this.maxHeight) {
             this.$buttons.hide()
+            this.$el.removeClass('is-minimal')
             return
         }
+
+        this.$el.addClass('minimal-loaded')
 
         this.$el.on('click', '.read-more > a', function() {
 
@@ -98,7 +101,7 @@
             maxHeight: 'none'
         })
         .animate({
-            height: this.totalHeight - this.buttonsHeight
+            height: this.totalHeight + this.buttonsHeight
         })
 
         this.$el.removeClass('is-minimal')
@@ -124,9 +127,9 @@
         var args = Array.prototype.slice.call(arguments, 1), result
         this.each(function () {
             var $this   = $(this)
-            var data    = $this.data('oc.minimalContent')
+            var data    = $this.data('ui.minimal-content')
             var options = $.extend({}, MinimalContent.DEFAULTS, $this.data(), typeof option == 'object' && option)
-            if (!data) $this.data('oc.minimalContent', (data = new MinimalContent(this, options)))
+            if (!data) $this.data('ui.minimal-content', (data = new MinimalContent(this, options)))
             if (typeof option == 'string') result = data[option].apply(data, args)
             if (typeof result != 'undefined') return false
         })
@@ -148,7 +151,7 @@
     // ===============
 
     $(document).on('render', function(){
-        $('div[data-control=minimalContent]').minimalContent()
+        $('div[data-control="minimal-content"]').minimalContent()
     })
 
 }(window.jQuery);
