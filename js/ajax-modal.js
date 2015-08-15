@@ -60,7 +60,9 @@
         this.$modal.modal({
             closable: false,
             selector: {
-                close: '.close'
+                close: '.close',
+                approve: '.close.approve',
+                deny: '.close.deny'
             },
             onHidden: function() {
                 self.destroy()

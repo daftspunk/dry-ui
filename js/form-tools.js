@@ -9,19 +9,19 @@ $(window).on('ajaxInvalidField', function(event, fieldElement, fieldName, errorM
         $label = $('<div />').addClass('ui red pointing above ui label')
 
     if (!$field.length) {
-        $field = fieldElement.closest('.field')
+        $field = $(fieldElement).closest('.field')
     }
 
     if (!$field.length) {
         return
     }
 
-    if (errorMsg)
+    if (errorMsg) {
         $label.text(errorMsg.join(', '))
+    }
 
     $label.addClass('form-field-error-label')
     $field.addClass('error')
-
 
     // Prevent the next error alert only once
     $(window).one('ajaxErrorMessage', function(event, message){
@@ -36,7 +36,7 @@ $(window).on('ajaxInvalidField', function(event, fieldElement, fieldName, errorM
     // Scroll to the form group
     if (isFirst) {
         $('html, body').animate({ scrollTop: $field.offset().top }, 500, function(){
-            fieldElement.focus()
+            $(fieldElement).focus()
         })
 
         $label.transition({
