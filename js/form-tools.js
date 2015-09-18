@@ -6,7 +6,7 @@ $(window).on('ajaxInvalidField', function(event, fieldElement, fieldName, errorM
     event.preventDefault()
 
     var $field = $(fieldElement).closest('.grouped.fields'),
-        $label = $('<div />').addClass('ui red pointing above ui label')
+        $label = $('<div />').addClass('ui red pointing above basic label')
 
     if (!$field.length) {
         $field = $(fieldElement).closest('.field')

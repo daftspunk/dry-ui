@@ -1,0 +1,115 @@
+/*
+ * MinimalContent plugin
+ * 
+ * Data attributes:
+ * - data-control="minimal-content" - enables the plugin on an element
+ * - data-option="value" - an option with a value
+ *
+ * JavaScript API:
+ * $('a#someElement').minimalContent({ option: 'value' })
+ */
+
++function ($) { "use strict";
+
+    // MINIMAL TEXTAREA CLASS DEFINITION
+    // ============================
+
+    var MinimalContent = function(element, options) {
+        this.options   = options
+        this.$el       = $(element)
+
+        var self = this
+
+        // Init
+        self.init()
+    }
+
+    MinimalContent.DEFAULTS = {
+    }
+
+    MinimalContent.prototype.init = function() {
+        var self = this
+
+        this.isMinimal = this.$el.hasClass('is-minimal')
+
+        this.refresh()
+
+        this.$el.addClass('minimal-state-loaded')
+
+        this.$el.on('click', '.read-more > a', function() {
+
+            if (self.isMinimal) {
+                self.showMore()
+            }
+            else {
+                self.showLess()
+            }
+
+            return false
+        });
+    }
+
+    MinimalContent.prototype.refresh = function() {
+        this.minimalHeight = this.$el.height()
+        this.maxHeight = parseInt(this.$el.css('max-height'))
+
+        /*
+         * Not required
+         */
+        if (this.minimalHeight < this.maxHeight) {
+            this.$el.addClass('minimal-state-disabled')
+        }
+        else {
+            this.$el.removeClass('minimal-state-disabled')
+        }
+    }
+
+    MinimalContent.prototype.showLess = function() {
+        this.$el.addClass('minimal-state-collapsed is-minimal').removeClass('minimal-state-expanded')
+        $(window).trigger('resize')
+        this.isMinimal = true
+    }
+
+    MinimalContent.prototype.showMore = function() {
+        this.$el.removeClass('minimal-state-collapsed is-minimal').addClass('minimal-state-expanded')
+        $(window).trigger('resize')
+        this.isMinimal = false
+    }
+
+    // MINIMAL TEXTAREA PLUGIN DEFINITION
+    // ============================
+
+    var old = $.fn.minimalContent
+
+    $.fn.minimalContent = function (option) {
+        var args = Array.prototype.slice.call(arguments, 1), result
+        this.each(function () {
+            var $this   = $(this)
+            var data    = $this.data('ui.minimal-content')
+            var options = $.extend({}, MinimalContent.DEFAULTS, $this.data(), typeof option == 'object' && option)
+            if (!data) $this.data('ui.minimal-content', (data = new MinimalContent(this, options)))
+            if (typeof option == 'string') result = data[option].apply(data, args)
+            if (typeof result != 'undefined') return false
+        })
+
+        return result ? result : this
+    }
+
+    $.fn.minimalContent.Constructor = MinimalContent
+
+    // MINIMAL TEXTAREA NO CONFLICT
+    // =================
+
+    $.fn.minimalContent.noConflict = function () {
+        $.fn.minimalContent = old
+        return this
+    }
+
+    // MINIMAL TEXTAREA DATA-API
+    // ===============
+
+    $(document).on('render', function(){
+        $('div[data-control="minimal-content"]').minimalContent('refresh')
+    })
+
+}(window.jQuery);

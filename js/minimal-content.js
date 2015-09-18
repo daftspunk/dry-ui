@@ -7,15 +7,6 @@
  *
  * JavaScript API:
  * $('a#someElement').minimalContent({ option: 'value' })
- *
- * Example:
- *   <div class="is-minimal" data-control="minimal-content">
- *       <p>Some really long content</p>
- *       <div class="read-more">
- *           <a href="javascript:;" class="ui small button">Read more</a>
- *           <a href="javascript:;" class="ui small button">Show less</a>
- *       </div>
- *   </div>
  */
 
 +function ($) { "use strict";
@@ -34,88 +25,128 @@
     }
 
     MinimalContent.DEFAULTS = {
+        showChars: 300,
+        ellipsesText: '...',
+        moreText: 'See more'
     }
 
     MinimalContent.prototype.init = function() {
-        var self = this
+        var self = this,
+            content = this.$el.html(),
+            shortContent,
+            longContent,
+            $long,
+            $short,
+            link
 
-        this.$buttons = $('.read-more', this.$el).show()
-        this.$btnReadMore = $('a:first', this.$buttons)
-        this.$btnReadLess = $('a:last', this.$buttons).hide()
+        link = ' <a href="javascript:;" data-read-more>'+this.options.moreText+'</a>'
 
-        this.isMinimal = this.$el.hasClass('is-minimal')
-        this.minimalHeight = this.$el.height()
-        this.maxHeight = parseInt(this.$el.css('max-height'))
-        this.buttonsHeight = this.$buttons.outerHeight()
+        shortContent = this.limitHtml(
+            content,
+            this.options.showChars,
+            this.options.ellipsesText,
+            link
+        )
 
-        /*
-         * Not required
-         */
-        if (this.minimalHeight < this.maxHeight) {
-            this.$buttons.hide()
-            this.$el.removeClass('is-minimal')
+        if (!shortContent) {
             return
         }
 
-        this.$el.addClass('minimal-loaded')
+        this.$el.wrap('<div data-long />')
+        $short = $('<div data-short>' + shortContent + '</div>');
+        $long = this.$el.parent()
 
-        this.$el.on('click', '.read-more > a', function() {
+        $long.hide()
+        $long.before($short)
 
-            if (self.isMinimal) {
-                self.showMore(this)
+        $short.on('click', '[data-read-more]', function() {
+            $(this).closest('[data-short]').hide().next().show()
+            $(window).trigger('resize')
+            return false
+        })
+    }
+
+    MinimalContent.prototype.limitHtml = function(content, showChars, end, link) {
+        var c = content.substr(0, showChars);
+
+        if (!link) {
+            link = ''
+        }
+
+        if (!end) {
+            end = '...'
+        }
+
+        if (content.length == c.length) {
+            return false
+        }
+
+        if (c.indexOf('<') == -1) {
+            // If there's HTML don't want to cut it
+            return c + end + link
+        }
+
+        var inTag = false; // I'm in a tag?
+        var bag = ''; // Put the characters to be shown here
+        var countChars = 0; // Current bag size
+        var openTags = []; // Stack for opened tags, so I can close them later
+        var tagName = null;
+
+        for (var i = 0, r = 0; r <= showChars; i++) {
+            if (content[i] == '<' && !inTag) {
+                inTag = true;
+
+                // This could be "tag" or "/tag"
+                tagName = content.substring(i + 1, content.indexOf('>', i));
+
+                // If its a closing tag
+                if (tagName[0] == '/') {
+                    if (tagName != '/' + openTags[0]) {
+                        console.log('ERROR en HTML: the top of the stack should be the tag that closes')
+                    }
+                    else {
+                        openTags.shift() // Pops the last tag from the open tag stack (the tag is closed in the retult HTML!)
+                    }
+                }
+                else {
+                    // There are some nasty tags that don't have a close tag like <br/>
+                    if (tagName.toLowerCase() != 'br') {
+                        openTags.unshift(tagName); // Add to start the name of the tag that opens
+                    }
+                }
+            }
+
+            if (inTag && content[i] == '>') {
+                inTag = false;
+            }
+
+            // Add tag name chars to the result
+            if (inTag) {
+                bag += content.charAt(i);
             }
             else {
-                self.showLess(this)
+                r++;
+                if (countChars <= showChars) {
+                    bag += content.charAt(i); // Fix to ie 7 not allowing you to reference string characters using the []
+                    countChars++;
+                }
+                // Now I have the characters needed
+                else {
+                    // I have unclosed tags
+                    if (openTags.length > 0) {
+                        for (j = 0; j < openTags.length; j++) {
+                            bag += '</' + openTags[j] + '>'; // Close all tags that were opened
+
+                            // You could shift the tag from the stack to check if you end with an empty stack, that means you have closed all open tags
+                        }
+                        break;
+                    }
+                }
             }
+        }
 
-            self.isMinimal = !self.isMinimal
-
-            return false
-        });
-    }
-
-    MinimalContent.prototype.showLess = function() {
-        var self = this
-
-        this.$el.addClass('is-minimal')
-
-        self.$el.animate({ height: this.minimalHeight }, function(){
-            self.$el.css({
-                height: 'auto',
-                maxHeight: self.maxHeight
-            })
-        })
-
-        this.$btnReadLess.hide()
-        this.$btnReadMore.show()
-    }
-
-    MinimalContent.prototype.showMore = function(button) {
-
-        var self = this
-
-        this.calculateTotalHeight()
-
-        self.$el.css({
-            height: this.minimalHeight,
-            maxHeight: 'none'
-        })
-        .animate({
-            height: this.totalHeight + this.buttonsHeight
-        })
-
-        this.$el.removeClass('is-minimal')
-        this.$btnReadMore.hide()
-        this.$btnReadLess.show()
-    }
-
-    MinimalContent.prototype.calculateTotalHeight = function() {
-        var totalHeight = 0
-        $('> *', this.$el).each(function() {
-            totalHeight += $(this).outerHeight()
-        })
-
-        this.totalHeight = totalHeight
+        c = $('<div/>').html(bag + '<span class="ellip">' + end + '</span>' + link).html();
+        return c;
     }
 
     // MINIMAL TEXTAREA PLUGIN DEFINITION

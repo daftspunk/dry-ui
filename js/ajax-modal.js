@@ -36,7 +36,8 @@
         updatePartial: null,
         extraData: {},
         modalId: null,
-        modalClass: null
+        modalClass: null,
+        closable: true
     }
 
     Modal.prototype.init = function(){
@@ -58,7 +59,7 @@
             this.$modal.addClass(this.options.modalClass)
 
         this.$modal.modal({
-            closable: false,
+            closable: this.options.closable,
             selector: {
                 close: '.close',
                 approve: '.close.approve',
@@ -88,18 +89,21 @@
                 data: this.options.extraData,
                 update: updateObj,
                 success: function(data, textStatus, jqXHR) {
+                    self.$modal.modal('hide dimmer')
+
                     this.success(data, textStatus, jqXHR).done(function(){
                         $(window).trigger('ajaxUpdateComplete', [this, data, textStatus, jqXHR])
-                        self.$modal.modal('show')
-                        setTimeout(function() {
-                            self.$loader.remove()
-                        }, 250)
+                        self.$loader.remove()
+
+                        self.$modal.modal('show', function() {
+                            $('.ui.dimmer.modals').scrollTop(0)
+                        })
                     })
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     this.error(jqXHR, textStatus, errorThrown).done(function(){
                         // alert(jqXHR.responseText.length ? jqXHR.responseText : jqXHR.statusText)
-                        this.$modal.modal('hide dimmer')
+                        self.$modal.modal('hide dimmer')
                         self.destroy()
                     })
                 }
