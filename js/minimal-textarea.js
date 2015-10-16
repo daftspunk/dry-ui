@@ -9,7 +9,7 @@
  * $('a#someElement').minimalTextarea({ option: 'value' })
  *
  * Example:
- *   <div class="is-minimal disabled" data-control="minimal-textarea">
+ *   <div class="is-minimal" data-control="minimal-textarea">
  *       <textarea name="content" placeholder="Click here"></textarea>
  *       <div class="hide-minimal">
  *           <button type="submit">

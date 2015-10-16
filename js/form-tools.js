@@ -24,7 +24,7 @@ $(window).on('ajaxInvalidField', function(event, fieldElement, fieldName, errorM
     $field.addClass('error')
 
     // Prevent the next error alert only once
-    $(window).one('ajaxErrorMessage', function(event, message){
+    $(window).one('ajaxError', function(event, message){
         event.preventDefault()
     })
 

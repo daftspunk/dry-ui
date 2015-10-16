@@ -101,11 +101,10 @@
                     })
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    this.error(jqXHR, textStatus, errorThrown).done(function(){
-                        // alert(jqXHR.responseText.length ? jqXHR.responseText : jqXHR.statusText)
-                        self.$modal.modal('hide dimmer')
-                        self.destroy()
-                    })
+                    // alert(jqXHR.responseText.length ? jqXHR.responseText : jqXHR.statusText)
+                    self.$modal.modal('hide dimmer')
+                    self.destroy()
+                    this.error(jqXHR, textStatus, errorThrown)
                 }
             })
 

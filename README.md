@@ -27,8 +27,11 @@ Inside the `some-form.htm` partial:
         <p>This is a form</p>
     </div>
     <div class="actions">
-        <button class="ui button" data-dismiss="modal">
-            Close
+        <a href="javascript:;" data-dismiss="modal">
+            Nevermind
+        </a>
+        <button class="ui large positive button">
+            Submit
         </button>
     </div>
 
