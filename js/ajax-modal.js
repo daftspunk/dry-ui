@@ -112,7 +112,7 @@
     }
 
     Modal.prototype.destroy = function() {
-        this.$modal.modal('hide')
+        // this.$modal.modal('hide')
         this.$modal.remove()
         this.$loader.remove()
         this.$el.data('ui.ajax-modal', null)

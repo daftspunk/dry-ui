@@ -48,12 +48,18 @@ $(window).on('ajaxConfirmMessage', function(event, message){
 
         $modal
             .modal({
+                allowMultiple: true,
+                onHide: function() {
+                    showSiblings()
+                },
                 onHidden: function() {
                     $modal.modal('destroy')
                     $modal.remove()
                 }
             })
             .modal('show')
+
+        hideSiblings($modal.siblings())
     }
 
     $.ui.confirm = function confirm(message, callback) {
@@ -63,15 +69,40 @@ $(window).on('ajaxConfirmMessage', function(event, message){
 
         $modal
             .modal({
+                allowMultiple: true,
                 closable: false,
                 onDeny: function() { callback(false) },
                 onApprove: function() { callback(true) },
+                onHide: function() {
+                    showSiblings()
+                },
                 onHidden: function() {
                     $modal.modal('destroy')
                     $modal.remove()
                 }
             })
             .modal('show')
+
+        hideSiblings($modal.siblings())
+    }
+
+    var $siblings
+
+    function hideSiblings($el) {
+        $siblings = $el
+
+        if (!!$siblings.length) {
+            $siblings.removeClass('visible').hide()
+        }
+
+    }
+
+    function showSiblings() {
+        if (!!$siblings.length) {
+            $siblings.addClass('visible').show().modal('refresh')
+        }
+
+        $siblings = null
     }
 
     function getDialogTemplate() {
