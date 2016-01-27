@@ -50,7 +50,8 @@
     }
 
     InlineEditor.prototype.init = function() {
-        // Public properties
+        var self = this
+
         this.$view  = $('.view.content', this.$el)
         this.$edit  = $('.edit.content', this.$el)
 
@@ -72,6 +73,15 @@
                 $(this).removeClass('inverted green')
             })
         }
+
+        this.$view.dblclick(function(e) {
+            self.showEdit()
+        })
+
+        this.$edit.keydown(function(e) {
+            if (e.keyCode == 27)
+                self.showView()
+        })
     }
 
     InlineEditor.prototype.getContainer = function() {
@@ -155,6 +165,11 @@
     // ===============
 
     $(document).on('click.ui.inline-editor', '[data-control="inline-editor"] [inline-edit]', function() {
+        $(this).closest('[data-control="inline-editor"]').inlineEditor()
+        return false
+    });
+
+    $(document).on('dblclick.ui.inline-editor', '[data-control="inline-editor"]', function() {
         $(this).closest('[data-control="inline-editor"]').inlineEditor()
         return false
     });

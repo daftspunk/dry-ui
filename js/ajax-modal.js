@@ -9,6 +9,7 @@
  * - data-handler="widget:pluginName" - October ajax request name
  * - data-update-partial="some partial" - Partial to popuplate the modal
  * - data-request-data="file_id: 1" - October ajax request data
+ * - data-modal-class="small" - Modal class for styling
  *
  * JavaScript API:
  * $('a#someLink').ajaxModal({ handler: 'onOpenModalForm' })
