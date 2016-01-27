@@ -89,7 +89,7 @@ var dataSet = [{
             return
 
         $option.val(0).text(placeholder)
-        $select.append($option)
+        $select.prepend($option)
     }
 
     NestedDropdown.prototype.updateNode = function(el) {
