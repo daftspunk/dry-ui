@@ -16,7 +16,7 @@
  * $('input#addressAutocomplete').locationAutocomplete({ inputCountry: '#locationCountry' })
  *
  * Dependences:
- * - Google maps (http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=false)
+ * - Google maps (http://maps.googleapis.com/maps/api/js?libraries=places)
  *
  * Example markup:
  *
