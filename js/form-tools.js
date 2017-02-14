@@ -60,43 +60,6 @@ $(document).on('ajaxPromise', '[data-request]', function() {
 })
 
 /*
- * Loading
- *
- * Examples:
-
-<a data-request="onSomething" data-attach-loading>
-    I will have loading class added
-</a>
-
-<form data-request="onSomething">
-    <button data-attach-loading>I will have loading class added</button>
-</form>
-
- */
-
-$(document)
-    .on('ajaxPromise', '[data-request]', function() {
-        var $target = $(this)
-
-        if ($target.data('attach-loading') !== undefined)
-            $target.addClass('loading').prop('disabled', true)
-
-        if ($target.is('form'))
-            $('[data-attach-loading]', $target).addClass('loading')
-
-    })
-    .on('ajaxFail ajaxDone', '[data-request]', function() {
-        var $target = $(this)
-
-        if ($target.data('attach-loading') !== undefined)
-            $target.removeClass('loading').prop('disabled', false)
-
-        if ($target.is('form'))
-            $('[data-attach-loading]', $target).removeClass('loading')
-
-    })
-
-/*
  * Toolbar
  *
  * Allows a button outside the form to trigger the submission,
