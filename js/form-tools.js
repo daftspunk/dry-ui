@@ -37,6 +37,7 @@ $(window).on('ajaxInvalidField', function(event, fieldElement, fieldName, errorM
         // Scroll to the form group, if not inside a modal window
         if (!$field.closest('.ui.modal').length) {
             $('html, body').animate({ scrollTop: $field.offset().top }, 500, function(){
+                if ($field.hasClass('no-focus')) return
                 $(fieldElement).focus()
             })
         }
