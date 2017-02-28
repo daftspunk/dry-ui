@@ -137,6 +137,10 @@
 
     $.fn.ajaxModal.Constructor = Modal
 
+    $.ajaxModal = function (option) {
+        return $('<a />').ajaxModal(option)
+    }
+
     // AJAX MODAL NO CONFLICT
     // =================
 
