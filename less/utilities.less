@@ -197,7 +197,8 @@
 
 .visible-mobile,
 .visible-tablet,
-.visible-computer {
+.visible-computer,
+.visible-lg-computer {
     display: none !important;
 }
 
@@ -216,6 +217,11 @@
         display: block !important;
     }
 }
+.visible-lg-computer {
+    @media (min-width: @largestSmallMonitor) and (max-width: @largestLargeMonitor) {
+        display: block !important;
+    }
+}
 
 .hidden-mobile {
     @media (max-width: @largestMobileScreen) {
@@ -229,6 +235,11 @@
 }
 .hidden-computer {
     @media (min-width: @computerBreakpoint) and (max-width: @largestSmallMonitor) {
+        display: none !important;
+    }
+}
+.hidden-lg-computer {
+    @media (min-width: @largestSmallMonitor) and (max-width: @largestLargeMonitor) {
         display: none !important;
     }
 }
